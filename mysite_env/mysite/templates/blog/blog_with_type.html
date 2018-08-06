@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{# 页面标题 #}
+{% block title %}
+    {{ blog_type }}
+{% endblock %}
+
+{# 页面内容 #}
+{% block content %}
+    <h3>分类：{{ blog_type }}</h3>
+    {% for blog in blogs %}
+        <a href="{% url 'blog_detail' blog.pk %}">
+            <h3>{{ blog.title }}</h3>
+        </a>
+        <p>{{ blog.content }}</p>
+    {% endfor %}
+    <p>共 {{ blogs.count }} 篇博客</p>
+{% endblock %}

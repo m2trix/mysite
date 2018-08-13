@@ -5,8 +5,8 @@ from .models import Blog, BlogType
 def blog_list(request):
     # localhost:8000/blog?page=[page_num]
     blogs_all_list = Blog.objects.all()
-    paginator = Paginator(blogs_all_list, 10) # Ã¿ 10 ¸öÔªËØ½øĞĞ·ÖÒ³
-    page_num = request.GET.get('page', 1) # »ñÈ¡ URL µÄÒ³Ãæ²ÎÊı£¨GETÇëÇó£©
+    paginator = Paginator(blogs_all_list, 10) # æ¯ 10 ä¸ªå…ƒç´ è¿›è¡Œåˆ†é¡µ
+    page_num = request.GET.get('page', 1) # è·å– URL çš„é¡µé¢å‚æ•°ï¼ˆGETè¯·æ±‚ï¼‰
     page_of_blogs = paginator.get_page(page_num)
 
     context = {}

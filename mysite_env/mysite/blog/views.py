@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, render
 from django.core.paginator import Paginator
 from django.conf import settings
 from .models import Blog, BlogType
@@ -36,7 +36,9 @@ def blog_list(request):
 def blog_detail(request, blog_pk):
     context = {}
     context['blog'] = get_object_or_404(Blog, pk=blog_pk)
-    return render_to_response('blog/blog_detail.html', context)
+    context['user'] = request.user
+    # return render_to_response('blog/blog_detail.html', context)
+    return render(request, 'blog/blog_detail.html', context)
 
 def blog_with_type(request, blog_type_pk):
     context = {}

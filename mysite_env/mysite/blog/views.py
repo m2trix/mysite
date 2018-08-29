@@ -1,7 +1,9 @@
 from django.shortcuts import render_to_response, get_object_or_404, render
 from django.core.paginator import Paginator
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from .models import Blog, BlogType
+from comment.models import Comment
 
 # each_page_blogs_number = 2
 
@@ -34,8 +36,13 @@ def blog_list(request):
     return render_to_response('blog/blog_list.html', context)
 
 def blog_detail(request, blog_pk):
+    blog = get_object_or_404(Blog, pk=blog_pk)
+    blog_content_type = ContentType.objects.get_for_model(blog)
+    comments = Comment.objects.filter(content_type=blog_content_type, object_id=blog.pk)
+
     context = {}
-    context['blog'] = get_object_or_404(Blog, pk=blog_pk)
+    context['blog'] = blog
+    context['comments'] = comments
     context['user'] = request.user
     # return render_to_response('blog/blog_detail.html', context)
     return render(request, 'blog/blog_detail.html', context)
